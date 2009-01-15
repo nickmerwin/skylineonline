@@ -38,6 +38,9 @@ class User < ActiveRecord::Base
   
   before_create :set_defaults
       
+  attr_accessor :terms_of_service
+  validates_format_of :terms_of_service, :on => :create, :with => /1/, :message => "must be read"
+
   attr_reader :password
   
   attr_protected :id, :created_at, :admin, :posts_count
@@ -85,4 +88,5 @@ class User < ActiveRecord::Base
   def to_s
     login
   end
+  
 end

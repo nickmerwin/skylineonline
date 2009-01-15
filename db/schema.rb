@@ -34,6 +34,14 @@ ActiveRecord::Schema.define(:version => 20081015052225) do
     t.datetime "updated_at"
   end
 
+  create_table "bans", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "ip"
+    t.string   "email"
+    t.string   "message"
+    t.datetime "expires_at"
+  end
+
   create_table "categories", :force => true do |t|
     t.string  "name"
     t.integer "position", :default => 0
@@ -103,6 +111,16 @@ ActiveRecord::Schema.define(:version => 20081015052225) do
 
   add_index "messages", ["created_at"], :name => "index_messages_on_created_at"
 
+  create_table "options", :force => true do |t|
+    t.string  "site_title"
+    t.string  "site_tagline"
+    t.text    "footer_left"
+    t.text    "footer_right"
+    t.string  "admin_rank"
+    t.string  "newest_user"
+    t.integer "theme_id"
+  end
+
   create_table "posts", :force => true do |t|
     t.integer  "user_id"
     t.integer  "topic_id"
@@ -112,13 +130,22 @@ ActiveRecord::Schema.define(:version => 20081015052225) do
     t.integer  "updated_by"
   end
 
-  add_index "posts", ["user_id", "created_at"], :name => "index_posts_on_user_id"
   add_index "posts", ["topic_id", "created_at"], :name => "index_posts_on_topic_id_and_created_at"
+  add_index "posts", ["user_id", "created_at"], :name => "index_posts_on_user_id"
 
   create_table "ranks", :force => true do |t|
     t.string  "title"
     t.integer "min_posts"
   end
+
+  create_table "sessions", :force => true do |t|
+    t.string   "session_id"
+    t.text     "data"
+    t.datetime "updated_at"
+  end
+
+  add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
+  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "settings", :force => true do |t|
     t.string  "title"
